@@ -1,0 +1,75 @@
+{
+	"name": "print-screen-uploader",
+	"version": "1.0.0",
+	"main": "/dist/index.js",
+	"scripts": {
+		"dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
+		"lint": "prettier --write .",
+		"build": "tsc --build --verbose && pkg --compress Brotli -t node17-linux-x64 ./dist/index.js -d -o ./out/Print-Screen-Uploader"
+	},
+	"repository": "https://github.com/SmollClover/Print-Screen-Uploader",
+	"author": "Clover <39840298+SmollClover@users.noreply.github.com>",
+	"license": "MIT",
+	"private": true,
+	"packageManager": "yarn@3.1.1",
+	"devDependencies": {
+		"@commitlint/cli": "^16.2.4",
+		"@commitlint/config-angular": "^16.2.4",
+		"@types/app-root-path": "^1.2.4",
+		"@types/node": "^17.0.31",
+		"@types/prettier": "^2.6.0",
+		"husky": "^8.0.1",
+		"lint-staged": "^12.4.1",
+		"prettier": "^2.6.2",
+		"ts-node": "^10.7.0",
+		"ts-node-dev": "^1.1.8",
+		"typescript": "^4.6.4"
+	},
+	"dependencies": {
+		"app-root-path": "^3.0.0",
+		"chalk": "4.1.2",
+		"consola": "^2.15.3",
+		"execa": "5.1.1",
+		"ora": "5.4.1",
+		"pkg": "^5.6.0"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn dlx @yarnpkg/doctor && lint-staged",
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+		}
+	},
+	"lint-staged": {
+		"*.ts": "prettier --write",
+		"*.js": "prettier --write"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-angular"
+		],
+		"rules": {
+			"scope-case": [
+				2,
+				"always",
+				"pascal-case"
+			],
+			"type-enum": [
+				2,
+				"always",
+				[
+					"chore",
+					"build",
+					"ci",
+					"docs",
+					"feat",
+					"fix",
+					"perf",
+					"refactor",
+					"revert",
+					"style",
+					"test"
+				]
+			]
+		}
+	}
+}
