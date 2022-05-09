@@ -1,6 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import consola from 'consola';
+import isPNG from 'is-png';
 
-import { client } from './client/Client';
-
-new client().start(process.env.TOKEN);
+process.stdin.on('data', (data) => {
+	if (isPNG(data)) {
+        return consola.log(true);
+    } else {
+        return data.toString()
+    }
+});

@@ -1898,6 +1898,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-png@npm:2.0.0":
+  version: 2.0.0
+  resolution: "is-png@npm:2.0.0"
+  checksum: c277ac4cc7b3cfde8ceb7e0868874db51d32d78e888ab6fbbc2ad12db47b77fb51fcb0d66e157be371c9a16f0592c2ed5fb53e3c528a1a89721b6d3090727f39
+  languageName: node
+  linkType: hard
+
 "is-stream@npm:^2.0.0":
   version: 2.0.1
   resolution: "is-stream@npm:2.0.1"
@@ -2795,6 +2802,7 @@ __metadata:
     consola: ^2.15.3
     execa: 5.1.1
     husky: ^8.0.1
+    is-png: 2.0.0
     lint-staged: ^12.4.1
     ora: 5.4.1
     pkg: ^5.6.0

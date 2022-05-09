@@ -33,6 +33,16 @@ $ npm start
 
 ---
 
+## Usage
+
+### Flameshot
+
+```bash
+$ flameshot gui -r | /path-to-file/Print-Screen-Uploader
+```
+
+---
+
 ## ToDo List
 
 -   [ ] Configuration file
@@ -44,7 +54,7 @@ $ npm start
         -   [ ] Make sure it's not a folder
         -   [ ] Read in file
         -   [ ] Send in correct format to Server
-    -   [ ] Check if data of picture
+    -   [x] Check if data of PNG picture
         -   [ ] Send in correct format to Server
 -   [ ] Server Response
     -   [ ] Check if everything went smooth
