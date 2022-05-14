@@ -1,4 +1,4 @@
-# Print Screen Uploader
+# Flameshot Print-Screen
 
 ### A Project designed to be used to upload files/pictures directly to Print Screen via flameshot
 
