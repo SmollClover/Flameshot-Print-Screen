@@ -1,5 +1,6 @@
 import consola from 'consola';
 import { copy } from 'copy-paste';
+import execa from 'execa';
 import { ensureFileSync, readJSONSync } from 'fs-extra';
 import isPNG from 'is-png';
 import { homedir } from 'os';
@@ -23,11 +24,17 @@ class Client {
 	private async start(): Promise<void> {
 		await this.loadConfig();
 
-		process.stdin.on('data', async (data) => {
-			if (isPNG(data)) {
-				await this.sendPicture(data);
-			}
-		});
+		try {
+			execa('flameshot', ['gui', '-r'], { encoding: null }).then(async (result) => {
+				const picture = result.stdout as unknown as Buffer;
+
+				if (isPNG(picture)) {
+					await this.sendPicture(picture);
+				}
+			});
+		} catch (err) {
+			consola.error(err);
+		}
 	}
 
 	private async sendPicture(picture: Buffer) {
