@@ -1,4 +1,5 @@
 import consola from 'consola';
+import { copy } from 'copy-paste';
 import { ensureFileSync, readJSONSync } from 'fs-extra';
 import isPNG from 'is-png';
 import { homedir } from 'os';
@@ -40,14 +41,14 @@ class Client {
 
 		data[this.config.FileFormName] = {
 			value: picture,
-			options: { contentType: 'image/png', filename: `Print-Screen-Uploader_${date.toISOString()}` },
+			options: { contentType: 'image/png', filename: `Print-Screen-Uploader_${date.toISOString()}.png` },
 		};
 
 		request(
-			'http://localhost:8888/',
+			this.config.RequestURL,
 			{
 				method: 'POST',
-				form: data,
+				formData: data,
 				headers: { 'Content-Type': 'multipart/form-data' },
 			},
 			(err, httpResponse, body) => {
@@ -55,7 +56,10 @@ class Client {
 
 				if (httpResponse.statusCode === 200) {
 					const response = JSON.parse(body);
-					consola.log(response.url);
+					consola.log(response);
+					copy(response.url, () => {
+						process.exit(0);
+					});
 				}
 			}
 		);

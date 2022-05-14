@@ -368,6 +368,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/copy-paste@npm:^1":
+  version: 1.1.30
+  resolution: "@types/copy-paste@npm:1.1.30"
+  checksum: 1dcb9d6f189aa0bd377fe6e4371db3c46fb3181aa7685e9cb979b6e0c69af7196767190ca3ad5a20111df7635f7e59c2de5f2b689ae1437f871bb0679633fddc
+  languageName: node
+  linkType: hard
+
 "@types/fs-extra@npm:^9.0.13":
   version: 9.0.13
   resolution: "@types/fs-extra@npm:9.0.13"
@@ -1082,6 +1089,19 @@ __metadata:
   bin:
     conventional-commits-parser: cli.js
   checksum: 1627ff203bc9586d89e47a7fe63acecf339aba74903b9114e23d28094f79d4e2d6389bf146ae561461dcba8fc42e7bc228165d2b173f15756c43f1d32bc50bfd
+  languageName: node
+  linkType: hard
+
+"copy-paste@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "copy-paste@npm:1.3.0"
+  dependencies:
+    iconv-lite: ^0.4.8
+    sync-exec: ~0.6.x
+  dependenciesMeta:
+    sync-exec:
+      optional: true
+  checksum: d9401737ab11f30a92e4991cc6eb475e4bfa1fa6beaff7200261603c5cf5516cd053f3acf9c20c3aadc0026fd7058858e22b4f7bb8869a3928584612ca3952a0
   languageName: node
   linkType: hard
 
@@ -1915,6 +1935,15 @@ __metadata:
   bin:
     husky: lib/bin.js
   checksum: 943a73a13d0201318fd30e83d299bb81d866bd245b69e6277804c3b462638dc1921694cb94c2b8c920a4a187060f7d6058d3365152865406352e934c5fff70dc
+  languageName: node
+  linkType: hard
+
+"iconv-lite@npm:^0.4.8":
+  version: 0.4.24
+  resolution: "iconv-lite@npm:0.4.24"
+  dependencies:
+    safer-buffer: ">= 2.1.2 < 3"
+  checksum: bd9f120f5a5b306f0bc0b9ae1edeb1577161503f5f8252a20f1a9e56ef8775c9959fd01c55f2d3a39d9a8abaf3e30c1abeb1895f367dcbbe0a8fd1c9ca01c4f6
   languageName: node
   linkType: hard
 
@@ -3085,12 +3114,14 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^16.2.4
     "@commitlint/config-angular": ^16.2.4
+    "@types/copy-paste": ^1
     "@types/fs-extra": ^9.0.13
     "@types/node": ^17.0.31
     "@types/prettier": ^2.6.0
     "@types/request": ^2
     chalk: 4.1.2
     consola: ^2.15.3
+    copy-paste: ^1.3.0
     execa: 5.1.1
     fs-extra: ^10.1.0
     husky: ^8.0.1
@@ -3440,7 +3471,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safer-buffer@npm:>= 2.1.2 < 3.0.0, safer-buffer@npm:^2.0.2, safer-buffer@npm:^2.1.0, safer-buffer@npm:~2.1.0":
+"safer-buffer@npm:>= 2.1.2 < 3, safer-buffer@npm:>= 2.1.2 < 3.0.0, safer-buffer@npm:^2.0.2, safer-buffer@npm:^2.1.0, safer-buffer@npm:~2.1.0":
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: cab8f25ae6f1434abee8d80023d7e72b598cf1327164ddab31003c51215526801e40b66c5e65d658a0af1e9d6478cadcb4c745f4bd6751f97d8644786c0978b0
@@ -3836,6 +3867,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"sync-exec@npm:~0.6.x":
+  version: 0.6.2
+  resolution: "sync-exec@npm:0.6.2"
+  checksum: cabc9bd70f36ccc7975eb947ce8cd8f5a7b97b1f4ad7241a46cdc6f1d857b079a7e1c8b5268661432cce5504d4327fb5e3c0819dca0d2b4a846f0b6b0a41ccc5
   languageName: node
   linkType: hard
 
