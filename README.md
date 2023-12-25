@@ -1,15 +1,24 @@
-# print-screen-uploader
+# Flameshot Print-Screen
 
-To install dependencies:
+### A Project designed to be used to upload files/pictures directly to Print Screen via flameshot
+
+---
+
+## Setup Instructions
+
+> Make sure to have Bun installed.
 
 ```bash
 bun install
+bun build
 ```
 
-To run:
+---
+
+## Usage
+
+**Make sure to have Flameshot installed**
 
 ```bash
-bun run index.ts
+./Print-Screen-Uploader
 ```
-
-This project was created using `bun init` in bun v1.0.19. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

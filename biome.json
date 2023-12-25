@@ -14,5 +14,10 @@
 		"indentWidth": 4,
 		"indentStyle": "tab",
 		"lineWidth": 128
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
 	}
 }
