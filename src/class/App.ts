@@ -1,3 +1,4 @@
+import { unlink } from 'node:fs/promises';
 import { copy } from 'copy-paste';
 import imageType from 'image-type';
 import type { InferType } from 'yup';
@@ -17,17 +18,23 @@ export class App {
 	}
 
 	public async launchFlameshot() {
-		const flameshot = Bun.spawn(['flameshot', 'gui', '-r']);
+		const old = Bun.file(Paths.PICTURE);
+		if (await old.exists()) await unlink(Paths.PICTURE);
+
+		const flameshot = Bun.spawn(['flameshot', 'gui', '--path', Paths.PICTURE]);
 
 		await flameshot.exited;
 		if (flameshot.signalCode) throw new Error(`Flameshot exited with signal code ${flameshot.signalCode}`);
 
-		const buffer = new Uint8Array(await Bun.readableStreamToArrayBuffer(flameshot.stdout));
-		await this.sendImage(buffer);
+		await this.sendImage();
 	}
 
-	private async sendImage(buffer: Uint8Array) {
+	private async sendImage() {
 		if (!this.config) throw new Error('Config should not be undefined, yet it is');
+
+		const picture = Bun.file(Paths.PICTURE);
+		const buffer = new Uint8Array(await picture.arrayBuffer());
+		await unlink(Paths.PICTURE);
 
 		const type = await imageType(buffer);
 		if (!type) throw new Error('Expected type of image but received unknown type');
