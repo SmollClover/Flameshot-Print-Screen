@@ -1,5 +1,4 @@
 import { unlink } from 'node:fs/promises';
-import { copy } from 'copy-paste';
 import imageType from 'image-type';
 import type { InferType } from 'yup';
 
@@ -27,6 +26,10 @@ export class App {
 		if (flameshot.signalCode) throw new Error(`Flameshot exited with signal code ${flameshot.signalCode}`);
 
 		await this.sendImage();
+	}
+
+	private async copyToClipboard(input: string) {
+		await Bun.spawn(['wl-copy', input], { stdout: null }).exited;
 	}
 
 	private async sendImage() {
@@ -64,6 +67,6 @@ export class App {
 			throw new Error(`Received unexpected response from Server ${response.status} ${response.errormsg}`);
 
 		console.log(response.url);
-		copy(response.url);
+		this.copyToClipboard(response.url);
 	}
 }
