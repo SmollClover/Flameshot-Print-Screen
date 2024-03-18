@@ -20,10 +20,7 @@ export class App {
 		const old = Bun.file(Paths.PICTURE);
 		if (await old.exists()) await unlink(Paths.PICTURE);
 
-		const flameshot = Bun.spawn(['flameshot', 'gui', '--path', Paths.PICTURE]);
-
-		await flameshot.exited;
-		if (flameshot.signalCode) throw new Error(`Flameshot exited with signal code ${flameshot.signalCode}`);
+		await Bun.$`flameshot gui --path ${Paths.PICTURE}`;
 
 		await this.sendImage();
 	}
