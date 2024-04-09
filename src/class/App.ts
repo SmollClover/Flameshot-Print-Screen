@@ -1,4 +1,5 @@
 import { unlink } from 'node:fs/promises';
+import { $, file, spawn } from 'bun';
 import imageType from 'image-type';
 import type { InferType } from 'yup';
 
@@ -10,29 +11,29 @@ export class App {
 	private config: InferType<typeof Config> | null = null;
 
 	public async loadConfig() {
-		const configFile = Bun.file(Paths.CONFIG);
+		const configFile = file(Paths.CONFIG);
 		if (configFile.size <= 0) throw new Error(`Could not load configuration from ${Paths.CONFIG}`);
 
 		this.config = Config.json().cast(await configFile.json());
 	}
 
 	public async launchFlameshot() {
-		const old = Bun.file(Paths.PICTURE);
+		const old = file(Paths.PICTURE);
 		if (await old.exists()) await unlink(Paths.PICTURE);
 
-		await Bun.$`flameshot gui --path ${Paths.PICTURE}`;
+		await $`flameshot gui --path ${Paths.PICTURE}`;
 
 		await this.sendImage();
 	}
 
 	private async copyToClipboard(input: string) {
-		await Bun.spawn(['wl-copy', input], { stdout: null }).exited;
+		await spawn(['wl-copy', input], { stdout: null }).exited;
 	}
 
 	private async sendImage() {
 		if (!this.config) throw new Error('Config should not be undefined, yet it is');
 
-		const picture = Bun.file(Paths.PICTURE);
+		const picture = file(Paths.PICTURE);
 		const buffer = new Uint8Array(await picture.arrayBuffer());
 		await unlink(Paths.PICTURE);
 
