@@ -4,15 +4,13 @@
 	"type": "module",
 	"scripts": {
 		"build": "bun build src/index.ts --compile --target=bun-linux-x64 --minify --outfile Print-Screen-Uploader",
-		"check": "biome check . --apply"
+		"check": "biome check . --write"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.7.1",
+		"@biomejs/biome": "1.8.3",
 		"@types/bun": "latest",
-		"@types/copy-paste": "^1.1.33"
-	},
-	"peerDependencies": {
-		"typescript": "^5.4.5"
+		"@types/copy-paste": "^1.1.33",
+		"typescript": "^5.5.3"
 	},
 	"dependencies": {
 		"image-type": "^5.2.0",
