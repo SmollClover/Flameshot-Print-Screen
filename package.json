@@ -8,7 +8,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
-		"@types/bun": "latest",
+		"@types/bun": "1.1.6",
 		"@types/copy-paste": "^1.1.33",
 		"typescript": "^5.5.3"
 	},
