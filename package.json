@@ -3,7 +3,7 @@
 	"module": "src/index.ts",
 	"type": "module",
 	"scripts": {
-		"build": "bun build src/index.ts --compile --target=bun-linux-x64 --minify --outfile Print-Screen-Uploader",
+		"build": "bun build src/index.ts --compile --target=bun-linux-x64 --sourcemap=inline --minify --outfile ./out/Print-Screen-Uploader",
 		"check": "biome check . --write"
 	},
 	"devDependencies": {
