@@ -6,18 +6,19 @@
 
 ## Setup Instructions
 
-> Make sure to have Bun installed.
+> Make sure to have Cargo/Rust installed.
 
 ```bash
-bun install
-bun build
+cargo build --release
 ```
+
+The finished binary will be `./target/release/Print-Screen-Uploader`
 
 ---
 
 ## Usage
 
-**Make sure to have Flameshot installed**
+**Make sure to have Flameshot and wl-clipboard installed**
 
 ```bash
 ./Print-Screen-Uploader
