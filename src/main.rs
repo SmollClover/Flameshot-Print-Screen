@@ -1,8 +1,9 @@
+use rand::RngExt;
 #[macro_use] extern crate log;
 
 use std::{fs, path::{Path, PathBuf}, process::{exit, Command}};
 use log::LevelFilter;
-use rand::{distr::Alphanumeric, Rng};
+use rand::{distr::Alphanumeric};
 use serde::{Deserialize, Serialize};
 use simplelog::{format_description, ColorChoice, ConfigBuilder, TermLogger, TerminalMode};
 
