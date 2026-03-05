@@ -1,11 +1,16 @@
-use rand::RngExt;
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
-use std::{fs, path::{Path, PathBuf}, process::{exit, Command}};
 use log::LevelFilter;
-use rand::{distr::Alphanumeric};
+use rand::RngExt;
+use rand::distr::Alphanumeric;
 use serde::{Deserialize, Serialize};
-use simplelog::{format_description, ColorChoice, ConfigBuilder, TermLogger, TerminalMode};
+use simplelog::{ColorChoice, ConfigBuilder, TermLogger, TerminalMode, format_description};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+    process::{Command, exit},
+};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 struct Config {
@@ -19,19 +24,19 @@ struct Config {
     request_type: String,
 
     #[serde(rename = "RequestURL")]
-	request_url: String,
+    request_url: String,
 
     #[serde(rename = "FileFormName")]
-	file_form_name: String,
+    file_form_name: String,
 
     #[serde(rename = "Arguments")]
-	arguments: ConfigArguments,
+    arguments: ConfigArguments,
 
     #[serde(rename = "ResponseType")]
-	response_type: String,
+    response_type: String,
 
     #[serde(rename = "URL")]
-	url: String,
+    url: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -45,7 +50,7 @@ struct ConfigArguments {
 struct PSReponse {
     status: String,
     errormsg: String,
-    url: String
+    url: String,
 }
 
 fn ensure_config(config_path: &PathBuf) {
@@ -54,7 +59,7 @@ fn ensure_config(config_path: &PathBuf) {
     match fs::exists(config_path) {
         Ok(true) => {
             debug!("Found config without any issues")
-        },
+        }
         _ => {
             info!("No config found, writing default empty config");
             let empty_config = Config::default();
@@ -93,7 +98,10 @@ fn screenshot() -> Vec<u8> {
         exit(0);
     }
 
-    if !flameshot.stdout.starts_with(&[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]) {
+    if !flameshot
+        .stdout
+        .starts_with(&[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A])
+    {
         error!("Expected to receive a PNG from flameshot");
         exit(1);
     }
@@ -127,7 +135,7 @@ fn upload(config: &Config, png: Vec<u8>) -> String {
         error!("Unexepcted return status: {}", response.status);
         exit(1)
     }
-    
+
     response.url
 }
 
@@ -143,15 +151,21 @@ fn main() {
     let log_config = ConfigBuilder::new()
         .set_time_format_custom(format_description!("[day].[month].[year] [hour]:[minute]:[second]"))
         .build();
-    let log_level = if std::env::var("RUST_LOG").unwrap_or_else(|_| "".to_string()).contains("debug") { LevelFilter::Debug } else { LevelFilter::Info };
+    let log_level = if std::env::var("RUST_LOG").unwrap_or_else(|_| "".to_string()).contains("debug") {
+        LevelFilter::Debug
+    } else {
+        LevelFilter::Info
+    };
     TermLogger::init(log_level, log_config, TerminalMode::Mixed, ColorChoice::Auto).unwrap();
 
-    let config_path = Path::new("").join(home::home_dir().unwrap()).join(".config/print-screen-uploader/config.json");
+    let config_path = Path::new("")
+        .join(home::home_dir().unwrap())
+        .join(".config/print-screen-uploader/config.json");
     info!("Config location: {}", &config_path.as_os_str().to_str().unwrap());
 
     ensure_config(&config_path);
     let config = load_config(&config_path);
-    
+
     let png = screenshot();
     let url = upload(&config, png);
     copy_to_clipboard(url);
