@@ -56,15 +56,12 @@ struct PSReponse {
 fn ensure_config(config_path: &PathBuf) {
     debug!("Checking to ensure that config exists");
 
-    match fs::exists(config_path) {
-        Ok(true) => {
-            debug!("Found config without any issues")
-        }
-        _ => {
-            info!("No config found, writing default empty config");
-            let empty_config = Config::default();
-            fs::write(config_path, serde_json::to_string_pretty(&empty_config).unwrap()).unwrap();
-        }
+    if let Ok(true) = fs::exists(config_path) {
+        debug!("Found config without any issues");
+    } else {
+        info!("No config found, writing default empty config");
+        let empty_config = Config::default();
+        fs::write(config_path, serde_json::to_string_pretty(&empty_config).unwrap()).unwrap();
     }
 }
 
@@ -74,7 +71,7 @@ fn load_config(config_path: &PathBuf) -> Config {
     let config_file = match fs::read_to_string(config_path) {
         Ok(config_file) => config_file,
         Err(e) => {
-            error!("Failed to read config file: {}", e);
+            error!("Failed to read config file: {e}");
             exit(1);
         }
     };
@@ -107,7 +104,7 @@ fn screenshot() -> Vec<u8> {
     }
 
     info!("Received PNG by flameshot");
-    flameshot.stdout.to_owned()
+    flameshot.stdout.clone()
 }
 
 fn upload(config: &Config, png: Vec<u8>) -> String {
@@ -140,18 +137,18 @@ fn upload(config: &Config, png: Vec<u8>) -> String {
 }
 
 fn copy_to_clipboard(url: String) {
-    info!("Copying to clipboard: {}", url);
+    info!("Copying to clipboard: {url}");
 
     // I'd like to use the arboard crate here instead but due to it not being able to keep clipboard contents after the program exits,
     // I will use this hacky workaround that requires wl-copy to be used.
-    Command::new("wl-copy").arg(url).spawn().unwrap();
+    let _ = Command::new("wl-copy").arg(url).spawn().unwrap().wait();
 }
 
 fn main() {
     let log_config = ConfigBuilder::new()
         .set_time_format_custom(format_description!("[day].[month].[year] [hour]:[minute]:[second]"))
         .build();
-    let log_level = if std::env::var("RUST_LOG").unwrap_or_else(|_| "".to_string()).contains("debug") {
+    let log_level = if std::env::var("RUST_LOG").unwrap_or_else(|_| String::new()).contains("debug") {
         LevelFilter::Debug
     } else {
         LevelFilter::Info
@@ -161,7 +158,7 @@ fn main() {
     let config_path = Path::new("")
         .join(home::home_dir().unwrap())
         .join(".config/print-screen-uploader/config.json");
-    info!("Config location: {}", &config_path.as_os_str().to_str().unwrap());
+    info!("Config location: {}", config_path.as_os_str().to_str().unwrap());
 
     ensure_config(&config_path);
     let config = load_config(&config_path);
